@@ -1,47 +1,16 @@
 <?php
 include "inc_header.php";
 
-$productName = $productCategory = $productPrice = $productStock = "";
-if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_add_btn'])){
-    $productImg = $_FILES["product_img"]["name"];
-    $targetFolder = "assets/img/productImg/";
-    $targetImg = $targetFolder . $productImg;
-    if(preg_match("/image\/(png)|(jpeg)|(webp)i/", $_FILES["product_img"]["type"])){
-
-        if(move_uploaded_file( $_FILES["product_img"]["tmp_name"], $targetImg)){
-            $productName = safe_input($_POST["product_name"]);
-            $productCategory = safe_input($_POST["product_category"]);
-            $productSupplier = safe_input($_POST["product_supplier"]);
-            $productPrice = safe_input($_POST["product_price"]);
-            $productStock = safe_input($_POST["product_stock"]);
-            $productAddDate = date("Y-m-d");
-            $sql = "INSERT INTO `products` 
-            (`ProductName`, `product_img`, `productAddDate`, `SupplierID`, `CategoryID`, `Unit`, `Price`) 
-            VALUES ( '$productName', '$targetImg', '$productAddDate', '$productSupplier', '$productCategory', '$productStock', '$productPrice');";
-            if($result = mysqli_query($conn, $sql)){
-                header("location:" . $_SERVER['PHP_SELF']);
-            }
-        }
-
-    }else{
-        echo "<script> alert('Invalid Image Format')</script>";
-    }
-}
-
 if(isset($_GET["delete_product_id"])){
     $sql = "DELETE FROM products WHERE ProductID='$_GET[delete_product_id]'";
     $result = mysqli_query($conn, $sql);
     header("location:" . $_SERVER['PHP_SELF']);
 }
 
-$sql = "SELECT * FROM products WHERE product_img!=' ' ORDER BY ProductID DESC";
+$sql = "SELECT * FROM products ORDER BY ProductID DESC";
 $result = mysqli_query($conn, $sql);
 
-$sql = "SELECT * FROM suppliers";
-$sup_result = mysqli_query($conn, $sql);
 
-$sql = "SELECT * FROM categories";
-$cate_result = mysqli_query($conn, $sql);
 
 ?>
 
@@ -63,9 +32,9 @@ $cate_result = mysqli_query($conn, $sql);
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="card-title">Products</h5>
-                    <button class="btn" style="background-color: #4154f1; color: antiquewhite;" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                    <a href="product_add.php" class="btn" style="background-color: #4154f1; color: antiquewhite;">
                         <i class="bi bi-plus-lg"></i> Add New Product
-                    </button>
+                    </a>
                 </div>
 
                 <div class="table-responsive">
@@ -135,78 +104,7 @@ $cate_result = mysqli_query($conn, $sql);
         </div>
     </section>
 
-    <!-- Add Product Modal -->
-    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <form id="addProductForm" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" enctype="multipart/form-data">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label for="addProductName" class="form-label">Product Name</label>
-                            <input type="text" class="form-control" id="addProductName" name="product_name" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="addProductName" class="form-label">Product Image</label>
-                            <input type="file" class="form-control" id="addProductName" name="product_img" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="addProductCategory" class="form-label">Category</label>
-                            <select class="form-control" name="product_category" id="addProductCategory">
-                                <option value="">Categories</option>
-                                <?php
-                                while($cate_row = mysqli_fetch_assoc($cate_result)){ 
-                                ?>
-                                    <option value="<?php echo $cate_row['CategoryID']?>"><?php echo $cate_row['CategoryName']?></option>
-                                <?php    
-                                }
-                                ?>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="addProductCategory" class="form-label">supplier</label>
-                            <select class="form-control" name="product_supplier" id="addProductCategory">
-                                <option value="">Suppliers</option>
-                                <?php
-                                while($sup_row = mysqli_fetch_assoc($sup_result)){ 
-                                ?>
-                                    <option value="<?php echo $sup_row['SupplierID']?>"><?php echo $sup_row['SupplierName']?></option>
-                                <?php    
-                                }
-                                ?>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="addProductPrice" class="form-label">Price ($)</label>
-                            <input type="number" step="0.1" class="form-control" id="addProductPrice" name="product_price" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="addProductStock" class="form-label">Stock</label>
-                            <input type="number" class="form-control" id="addProductStock" name="product_stock" required>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" name="product_add_btn" class="btn text-white" style="background-color: #4154f1;">Add Product</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
 </main><!-- End #main -->
-
 
 
 <?php
