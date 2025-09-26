@@ -1,6 +1,6 @@
 <?php
 require "inc_conn.php";
 echo"<pre>";
-pr($_FILES["product_img"]);
+pr($_SESSION["user_id"]);
 echo"</pre>";
 ?>

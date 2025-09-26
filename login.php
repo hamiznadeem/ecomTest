@@ -28,17 +28,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["username"]) && isset($
                     $sql = "SELECT * FROM role WHERE role_id='$row[usertype]' ";
                     $role_result = mysqli_query($conn, $sql);
                     $role_row = mysqli_fetch_array($role_result);
+                    $_SESSION["role_id"] = $role_row["role_id"];
                     $_SESSION["role"] = $role_row["description"];
 
                     $sql = "SELECT * FROM employees WHERE EmployeeID='$row[emp_id]' ";
                     $emp_result = mysqli_query($conn, $sql);
                     $emp_row = mysqli_fetch_array($emp_result);
                     $_SESSION["fname"] = $emp_row["FirstName"];
-                    $_SESSION["lname"] = $emp_row["LastName"] ;
+                    $_SESSION["lname"] = $emp_row["LastName"];
+                    $_SESSION["user_photo"] = $emp_row["Photo"];
+                    $_SESSION["user_id"] = $emp_row["EmployeeID"];
 
                     $_SESSION["username"] = $row["username"];
                     $_SESSION["password"] = $row["password"];
                     $_SESSION["logged_in"] = true;
+
                     header("Location:dashboard.php" );
 
                 }else if($row["usertype"] == 2){
@@ -125,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["username"]) && isset($
                                         <p class="text-center small">Enter your username & password to login</p>
                                         <?php 
                                             if($loginErr){
-                                                echo '<p><span class="alert alert-danger pt-2 pb-2">Invalid Username Or Password</span></p>';
+                                                echo '<div class="alert alert-danger">Invalid Username Or Password</div>';
                                             } 
                                         ?> 
                                     </div>

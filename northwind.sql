@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2025 at 02:02 AM
+-- Generation Time: Sep 26, 2025 at 02:55 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -171,26 +171,32 @@ CREATE TABLE `employees` (
   `EmployeeID` int(11) NOT NULL,
   `LastName` varchar(15) DEFAULT NULL,
   `FirstName` varchar(15) DEFAULT NULL,
-  `BirthDate` datetime DEFAULT NULL,
-  `Photo` varchar(25) DEFAULT NULL,
-  `Notes` varchar(1024) DEFAULT NULL
+  `Photo` varchar(255) DEFAULT 'assets/img/Emp_img/user.png',
+  `BirthDate` date DEFAULT NULL,
+  `Company` varchar(100) DEFAULT NULL,
+  `Country` varchar(100) DEFAULT NULL,
+  `Address` varchar(255) DEFAULT NULL,
+  `Phone` varchar(20) DEFAULT NULL,
+  `Email` varchar(100) DEFAULT NULL,
+  `Gender` varchar(15) DEFAULT NULL,
+  `About` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `employees`
 --
 
-INSERT INTO `employees` (`EmployeeID`, `LastName`, `FirstName`, `BirthDate`, `Photo`, `Notes`) VALUES
-(1, 'Davolio', 'Nancy', '1968-12-08 00:00:00', 'EmpID1.pic', 'Education includes a BA in psychology from Colorado State University. She also completed (The Art of the Cold Call). Nancy is a member of \'Toastmasters International\'.'),
-(2, 'Fuller', 'Andrew', '1952-02-19 00:00:00', 'EmpID2.pic', 'Andrew received his BTS commercial and a Ph.D. in international marketing from the University of Dallas. He is fluent in French and Italian and reads German. He joined the company as a sales representative, was promoted to sales manager and was then named vice president of sales. Andrew is a member of the Sales Management Roundtable, the Seattle Chamber of Commerce, and the Pacific Rim Importers Association.'),
-(3, 'Leverling', 'Janet', '1963-08-30 00:00:00', 'EmpID3.pic', 'Janet has a BS degree in chemistry from Boston College). She has also completed a certificate program in food retailing management. Janet was hired as a sales associate and was promoted to sales representative.'),
-(4, 'Peacock', 'Margaret', '1958-09-19 00:00:00', 'EmpID4.pic', 'Margaret holds a BA in English literature from Concordia College and an MA from the American Institute of Culinary Arts. She was temporarily assigned to the London office before returning to her permanent post in Seattle.'),
-(5, 'Buchanan', 'Steven', '1955-03-04 00:00:00', 'EmpID5.pic', 'Steven Buchanan graduated from St. Andrews University, Scotland, with a BSC degree. Upon joining the company as a sales representative, he spent 6 months in an orientation program at the Seattle office and then returned to his permanent post in London, where he was promoted to sales manager. Mr. Buchanan has completed the courses \'Successful Telemarketing\' and \'International Sales Management\'. He is fluent in French.'),
-(6, 'Suyama', 'Michael', '1963-07-02 00:00:00', 'EmpID6.pic', 'Michael is a graduate of Sussex University (MA, economics) and the University of California at Los Angeles (MBA, marketing). He has also taken the courses \'Multi-Cultural Selling\' and \'Time Management for the Sales Professional\'. He is fluent in Japanese and can read and write French, Portuguese, and Spanish.'),
-(7, 'King', 'Robert', '1960-05-29 00:00:00', 'EmpID7.pic', 'Robert King served in the Peace Corps and traveled extensively before completing his degree in English at the University of Michigan and then joining the company. After completing a course entitled \'Selling in Europe\', he was transferred to the London office.'),
-(8, 'Callahan', 'Laura', '1958-01-09 00:00:00', 'EmpID8.pic', 'Laura received a BA in psychology from the University of Washington. She has also completed a course in business French. She reads and writes French.'),
-(9, 'Dodsworth', 'Anne', '1969-07-02 00:00:00', 'EmpID9.pic', 'Anne has a BA degree in English from St. Lawrence College. She is fluent in French and German.'),
-(10, 'West', 'Adam', '1928-09-19 00:00:00', 'EmpID10.pic', 'An old chum.');
+INSERT INTO `employees` (`EmployeeID`, `LastName`, `FirstName`, `Photo`, `BirthDate`, `Company`, `Country`, `Address`, `Phone`, `Email`, `Gender`, `About`) VALUES
+(1, 'Davolio', 'Nancy', 'assets/img/Emp_img/user.png', '1968-12-08', 'Contoso Ltd.', 'USA', '123 Main St, Denver, CO', '555-1234', 'nancy.davolio@example.com', 'male', ''),
+(2, 'Fuller', 'Andrew', 'assets/img/Emp_img/user.png', '1952-02-19', 'Northwind Traders', 'USA', '456 Oak Ave, Boston, MA', '555-5678', 'andrew.fuller@example.com', 'male', ''),
+(3, 'Leverling', 'Adam', 'assets/img/Emp_img/user.png', '2000-07-13', 'Adventure Works', 'US', '789 Pine Rd, Seattle, WA', '555-8765', 'janet.leverling@example.com', 'Male', ''),
+(4, 'Peacock', 'Margaret', 'assets/img/Emp_img/user.png', '1958-09-19', 'Tailspin Toys', 'UK', '12 King St, London', '020-555-1122', 'margaret.peacock@example.com', 'male', ''),
+(5, 'Buchanan', 'Steven', 'assets/img/Emp_img/user.png', '1955-03-04', 'Fabrikam Inc.', 'UK', '45 Queen Rd, Edinburgh', '0131-555-3344', 'steven.buchanan@example.com', 'male', ''),
+(6, 'Suyama', 'Michael', 'assets/img/Emp_img/user.png', '1963-07-02', 'Woodgrove Bank', 'UK', '78 Hill Ln, Brighton', '01273-555-6677', 'michael.suyama@example.com', 'male', ''),
+(7, 'King', 'Robert', 'assets/img/Emp_img/user.png', '1960-05-29', 'Litware Corp.', 'USA', '90 Lake View, New York, NY', '555-9988', 'robert.king@example.com', 'male', ''),
+(8, 'Callahan', 'Laura', 'assets/img/Emp_img/user.png', '1958-01-09', 'Blue Yonder Airlines', 'USA', '14 Maple St, Portland, OR', '555-2233', 'laura.callahan@example.com', 'male', ''),
+(9, 'Dodsworth', 'Anne', 'assets/img/Emp_img/user.png', '1969-07-02', 'Consolidated Messenger', 'USA', '66 River Rd, Albany, NY', '555-4455', 'anne.dodsworth@example.com', 'male', ''),
+(10, 'West', 'Adam', 'assets/img/Emp_img/user.png', '1928-09-19', 'Wingtip Toys', 'USA', '101 Sunset Blvd, Los Angeles, CA', '555-7788', 'adam.west@example.com', 'male', '');
 
 -- --------------------------------------------------------
 
@@ -211,7 +217,7 @@ CREATE TABLE `logins` (
 --
 
 INSERT INTO `logins` (`login_id`, `usertype`, `emp_id`, `username`, `password`) VALUES
-(1, 1, 3, 'admin', '$2y$10$qjpygpjO9MubUQGgdhnhhOOTF5bLZqorwwyr08jycMAJxj7Smj2dK'),
+(1, 1, 3, 'admin', '$2y$10$NAt.KpflSI5.80ZYc5iwtufimnTB5bH4dWVOjdlXcLSVQdYzgag3K'),
 (2, 2, 1, 'user', '$2y$10$n8YYp8tWUmepxcjSGYiVUuBOyjCuY1vvwAUugqDg5f5EqgVbUnJke');
 
 -- --------------------------------------------------------
@@ -977,7 +983,7 @@ INSERT INTO `orders` (`OrderID`, `CustomerID`, `EmployeeID`, `OrderDate`, `Shipp
 CREATE TABLE `products` (
   `ProductID` int(11) NOT NULL,
   `ProductName` varchar(50) DEFAULT NULL,
-  `product_img` varchar(5000) NOT NULL,
+  `product_img` varchar(5000) DEFAULT NULL,
   `productAddDate` date DEFAULT NULL,
   `SupplierID` int(11) DEFAULT NULL,
   `CategoryID` int(11) DEFAULT NULL,
@@ -1279,7 +1285,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `ProductID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `ProductID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT for table `role`
