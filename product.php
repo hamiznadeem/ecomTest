@@ -7,6 +7,19 @@ if(isset($_GET["delete_product_id"])){
     header("location:" . $_SERVER['PHP_SELF']);
 }
 
+if(isset($_GET["active_product_id"])){
+    $sql = "SELECT * FROM products WHERE ProductID='$_GET[active_product_id]'";
+    $result = mysqli_query($conn, $sql);
+    $activeCheck_row = mysqli_fetch_array($result);
+    if($activeCheck_row["Active"] == 0){
+        $sql = "UPDATE `products` SET `Active`=1 WHERE `ProductID`='$_GET[active_product_id]'";
+    }else if($activeCheck_row["Active"] == 1){
+        $sql = "UPDATE `products` SET `Active`= 0  WHERE `ProductID`='$_GET[active_product_id]'";
+    }
+    $result = mysqli_query($conn, $sql);
+    header("location:" . $_SERVER['PHP_SELF']);
+}
+
 $sql = "SELECT * FROM products ORDER BY ProductID DESC";
 $result = mysqli_query($conn, $sql);
 
@@ -84,9 +97,9 @@ $result = mysqli_query($conn, $sql);
                                     <span style="font-size: .73rem;" class="badge <?php echo "$class"?>" > <?php echo "$status"?></span>
                                 </td>
                                 <td>
-                                    <a class="text-black" href=""><span class="me-1"> <?php echo "$activeIcon"?></span></a>
-                                    <a class="text-black" href=""><span><i class="bi bi-pencil-square "></i></span></a>
-                                    <a class="text-black" href="<?php echo $_SERVER['PHP_SELF']."?delete_product_id=$product_row[ProductID]"?>"
+                                    <a class="text-black" href="<?php echo $_SERVER['PHP_SELF']."?active_product_id=".urlencode($product_row['ProductID'])?>"><span class="me-1"> <?php echo "$activeIcon"?></span></a>
+                                    <a class="text-black" href="product_edit.php?product_edit_id=<?php echo urlencode($product_row['ProductID'])?>" ><span><i class="bi bi-pencil-square "></i></span></a>
+                                    <a class="text-black" href="<?php echo $_SERVER['PHP_SELF']."?delete_product_id=".urlencode($product_row['ProductID'])?>"
                                     onclick="if(!confirm('Are you sure you want to delete this product?')) { event.preventDefault(); }">
                                         <span class="me-1">
                                             <i class="bi bi-trash3"></i>
