@@ -1,13 +1,5 @@
 <?php
 include "inc_header.php";
-if ($_SESSION['logged_in'] !== true) {
-    header('location:login.php');
-    exit;
-}
-// Disable caching (browser aur bfcache dono)
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Pragma: no-cache");
-header("Expires: 0");
 ?>
 
 <main id="main" class="main">

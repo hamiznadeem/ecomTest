@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["filter"]) && $_GET["filt
                 <div class="d-flex justify-content-start align-items-center mb-3 gap-3">
                     <h5 class="card-title">Orders</h5>
                     <form class="mt-3" method="get" action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>">
-                        <select class="form-select form-select-sm" name="filter" onchange="this.form.submit()">
+                        <select class="form-control" name="filter" onchange="this.form.submit()">
                             <option value=""><?php echo "$filter" ?></option>
                             <option value="all">All</option>
                             <option value="pending">Pending</option>
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["filter"]) && $_GET["filt
                                     <td><?php echo "$customer_row[CustomerName]"; ?></td>
 
                                     <td class="flex pb-0 pt-3">
-                                        <p class="alert alert-secondary mx-0">
+                                        <p class="">
                                             <?php while ($orderDetail_row = mysqli_fetch_assoc($orderDetail_result)) {
                                                 $sql = "SELECT * FROM products WHERE ProductID=$orderDetail_row[ProductID]";
                                                 $product_result = mysqli_query($conn, $sql);

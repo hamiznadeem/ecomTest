@@ -20,10 +20,35 @@ if(isset($_GET["active_product_id"])){
     header("location:" . $_SERVER['PHP_SELF']);
 }
 
-$sql = "SELECT * FROM products ORDER BY ProductID DESC";
-$result = mysqli_query($conn, $sql);
+$product_fil_id = "";
+$filter = false;
+if(isset($_GET['product_cate_fil']) && $_GET['product_cate_fil'] != 'All'){
+    $product_fil_id = $_GET['product_cate_fil'];
+    $sql = "SELECT * FROM products WHERE CategoryID='$product_fil_id' ORDER BY ProductID DESC";
+    $filter = true;
+}else{
+    $sql = "SELECT * FROM products ORDER BY ProductID DESC";
+}
+$product_result = mysqli_query($conn, $sql);
 
+$sql = "SELECT * FROM categories";
+$cate_result = mysqli_query($conn, $sql);
 
+$selected_cate_name = "All";
+$filter_options = "";
+while($cate_row = mysqli_fetch_assoc($cate_result)){
+    if($filter){
+        if($cate_row["CategoryID"] == $product_fil_id){
+            $selected_cate_name = $cate_row["CategoryName"];
+        }
+    }
+
+    if($product_fil_id == $cate_row['CategoryID']){
+        $filter_options .= '<option value="All">All</option>';
+        continue;
+    }
+    $filter_options .= '<option value="'.$cate_row['CategoryID']. '">' .$cate_row['CategoryName'].'</option>';
+} 
 
 ?>
 
@@ -44,7 +69,15 @@ $result = mysqli_query($conn, $sql);
             <div class="card-body">
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="card-title">Products</h5>
+                    <div class="d-flex justify-content-start align-items-center gap-3">
+                        <h5 class="card-title">Products</h5>
+                        <form class="mt-3" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="GET">
+                            <select class="form-control" name="product_cate_fil" id="product_cate_fil" onchange="this.form.submit()">
+                                <option value="" > <?php echo $selected_cate_name ?></option>
+                                <?php echo $filter_options ?>
+                            </select>
+                        </form>
+                    </div>
                     <a href="product_add.php" class="btn" style="background-color: #4154f1; color: antiquewhite;">
                         <i class="bi bi-plus-lg"></i> Add New Product
                     </a>
@@ -67,7 +100,7 @@ $result = mysqli_query($conn, $sql);
                         <tbody class="fw-bold"  style="font-size: .8rem;">
                             <?php
                             $ser = 1;
-                            while ($product_row = mysqli_fetch_assoc($result)){
+                            while ($product_row = mysqli_fetch_assoc($product_result)){
                                 $sql = "SELECT * FROM categories WHERE CategoryID=$product_row[CategoryID]";
                                 $result2 = mysqli_query($conn, $sql);
                                 $category_row = mysqli_fetch_array($result2);

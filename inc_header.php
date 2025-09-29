@@ -1,5 +1,23 @@
 <?php
 require "inc_conn.php";
+if ($_SESSION['logged_in'] !== true) {
+    header('location:login.php');
+    exit;
+}
+
+$sql = "SELECT * FROM employees WHERE EmployeeID=' $_SESSION[emp_id]' ";
+    $emp_result = mysqli_query($conn, $sql);
+    $emp_row = mysqli_fetch_array($emp_result);
+    $_SESSION["fname"] = $emp_row["FirstName"];
+    $_SESSION["lname"] = $emp_row["LastName"];
+    $_SESSION["user_photo"] = $emp_row["Photo"];
+    $_SESSION["user_id"] = $emp_row["EmployeeID"];
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+$current_page = basename($_SERVER['PHP_SELF']);
 ?>
 
 <!DOCTYPE html>
@@ -53,11 +71,11 @@ require "inc_conn.php";
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
+            <svg class="toggle-sidebar-btn me-4" xmlns="http://www.w3.org/2000/svg" width="35"  height="35" viewBox="0 0 24 24" fill="currentColor"><path d="M3 4H21V6H3V4ZM3 11H15V13H3V11ZM3 18H21V20H3V18Z"></path></svg>
             <a href="dashboard.php" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
                 <span class="d-none d-lg-block">Ecommerce</span>
             </a>
-            <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
         <div class="search-bar">
@@ -220,14 +238,14 @@ require "inc_conn.php";
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="<?php echo $_SESSION["user_photo"]?>" alt="<?php echo $_SESSION["fname"] . " " . $_SESSION["lname"]?>" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $_SESSION["fname"] . " " . $_SESSION["lname"]?></span>
+                        <img src="<?php echo $_SESSION["user_photo"] ?>" alt="<?php echo $_SESSION["fname"] . " " . $_SESSION["lname"] ?>" class="rounded-circle">
+                        <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $_SESSION["fname"] . " " . $_SESSION["lname"] ?></span>
                     </a><!-- End Profile Image Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6><?php echo $_SESSION["fname"] . " " .$_SESSION["lname"]?></h6>
-                            <span><?php echo $_SESSION["role"]?></span>
+                            <h6><?php echo $_SESSION["fname"] . " " . $_SESSION["lname"] ?></h6>
+                            <span><?php echo $_SESSION["role"] ?></span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -264,7 +282,7 @@ require "inc_conn.php";
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="logout.php">
+                            <a class="dropdown-item d-flex align-items-center" href="" data-bs-toggle="modal" data-bs-target="#logoutModal">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Sign Out</span>
                             </a>
@@ -284,40 +302,40 @@ require "inc_conn.php";
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="dashboard.php">
+                <a class="nav-link <?php echo ($current_page == 'dashboard.php') ? '' : 'collapsed'; ?>" href="dashboard.php">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
             </li><!-- End Dashboard Nav -->
-            
+
             <li class="nav-item">
-                <a class="nav-link collapsed" href="profile.php">
+                <a class="nav-link <?php echo ($current_page == 'profile.php') ? '' : 'collapsed'; ?>" href="profile.php">
                     <i class="bi bi-person"></i>
                     <span>Profile</span>
                 </a>
             </li><!-- End Profile Page Nav -->
-            
+
             <li class="nav-item">
-                <a class="nav-link collapsed" href="product.php">
+                <a class="nav-link <?php echo ($current_page == 'product.php') ? '' : 'collapsed'; ?>" href="product.php">
                     <i class="bi bi-shop"></i>
                     <span>Products</span>
                 </a>
             </li><!-- End Product Page Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="orders.php">
+                <a class="nav-link <?php echo ($current_page == 'orders.php') ? '' : 'collapsed'; ?>" href="orders.php">
                     <i class="bi bi-bag"></i>
                     <span>Orders</span>
                 </a>
             </li><!-- End Orders Page Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="home.php">
+                <a class="nav-link <?php echo ($current_page == 'home.php') ? '' : 'collapsed'; ?>" href="home.php">
                     <i class="bi bi-house"></i>
                     <span>Home Page</span>
                 </a>
             </li><!-- End home page Nav -->
-            
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="register.php">
                     <i class="bi bi-card-list"></i>
@@ -326,7 +344,7 @@ require "inc_conn.php";
             </li><!-- End Register Page Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="logout.php">
+                <a class="nav-link collapsed" href="" data-bs-toggle="modal" data-bs-target="#logoutModal">
                     <i class="bi bi-box-arrow-in-left"></i>
                     <span>Logout</span>
                 </a>
@@ -335,3 +353,20 @@ require "inc_conn.php";
         </ul>
 
     </aside><!-- End Sidebar-->
+    <div class="modal" tabindex="-1" id="logoutModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Logout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Sure you want to logout</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">No</button>
+                    <a href="logout.php" type="button" class="btn btn-danger">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
