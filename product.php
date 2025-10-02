@@ -55,7 +55,8 @@ $result = mysqli_query($conn, $sql);
                             <?php
                             $ser = 1;
                             while ($product_row = mysqli_fetch_assoc($result)){
-                                $sql = "SELECT * FROM categories WHERE CategoryID=$product_row[CategoryID]";
+                                $categoryID = $product_row["CategoryID"];
+                                $sql = "SELECT * FROM categories WHERE CategoryID='$categoryID'";
                                 $result2 = mysqli_query($conn, $sql);
                                 $category_row = mysqli_fetch_array($result2);
                             ?>
@@ -86,7 +87,7 @@ $result = mysqli_query($conn, $sql);
                                 <td>
                                     <a class="text-black" href=""><span class="me-1"> <?php echo "$activeIcon"?></span></a>
                                     <a class="text-black" href=""><span><i class="bi bi-pencil-square "></i></span></a>
-                                    <a class="text-black" href="<?php echo $_SERVER['PHP_SELF']."?delete_product_id=$product_row[ProductID]"?>"
+                                    <a class="text-black" href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'] . '?delete_product_id=' . urlencode($product_row['ProductID'])); ?>"
                                     onclick="if(!confirm('Are you sure you want to delete this product?')) { event.preventDefault(); }">
                                         <span class="me-1">
                                             <i class="bi bi-trash3"></i>
