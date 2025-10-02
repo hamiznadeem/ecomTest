@@ -100,14 +100,8 @@ while($cate_row = mysqli_fetch_assoc($cate_result)){
                         <tbody class="fw-bold"  style="font-size: .8rem;">
                             <?php
                             $ser = 1;
-<<<<<<< HEAD
-                            while ($product_row = mysqli_fetch_assoc($result)){
-                                $categoryID = $product_row["CategoryID"];
-                                $sql = "SELECT * FROM categories WHERE CategoryID='$categoryID'";
-=======
                             while ($product_row = mysqli_fetch_assoc($product_result)){
                                 $sql = "SELECT * FROM categories WHERE CategoryID=$product_row[CategoryID]";
->>>>>>> 3df8e0e573a9a88bebab09cfc378c9b36473b500
                                 $result2 = mysqli_query($conn, $sql);
                                 $category_row = mysqli_fetch_array($result2);
                             ?>
@@ -136,15 +130,9 @@ while($cate_row = mysqli_fetch_assoc($cate_result)){
                                     <span style="font-size: .73rem;" class="badge <?php echo "$class"?>" > <?php echo "$status"?></span>
                                 </td>
                                 <td>
-<<<<<<< HEAD
-                                    <a class="text-black" href=""><span class="me-1"> <?php echo "$activeIcon"?></span></a>
-                                    <a class="text-black" href=""><span><i class="bi bi-pencil-square "></i></span></a>
-                                    <a class="text-black" href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'] . '?delete_product_id=' . urlencode($product_row['ProductID'])); ?>"
-=======
                                     <a class="text-black" href="<?php echo $_SERVER['PHP_SELF']."?active_product_id=".urlencode($product_row['ProductID'])?>"><span class="me-1"> <?php echo "$activeIcon"?></span></a>
                                     <a class="text-black" href="product_edit.php?product_edit_id=<?php echo urlencode($product_row['ProductID'])?>" ><span><i class="bi bi-pencil-square "></i></span></a>
                                     <a class="text-black" href="<?php echo $_SERVER['PHP_SELF']."?delete_product_id=".urlencode($product_row['ProductID'])?>"
->>>>>>> 3df8e0e573a9a88bebab09cfc378c9b36473b500
                                     onclick="if(!confirm('Are you sure you want to delete this product?')) { event.preventDefault(); }">
                                         <span class="me-1">
                                             <i class="bi bi-trash3"></i>
