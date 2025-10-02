@@ -110,7 +110,7 @@ $cate_result = mysqli_query($conn, $sql);
                             <div class="row mb-3">
                                 <label for="ProductStock" class="col-sm-2 col-form-label">Product Stock</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="ProductStock" name="ProductStock" placeholder="Stock" value="<?php echo htmlspecialchars($ProductStock); ?>">
+                                    <input type="text" class="form-control" id="ProductStock" name="ProductStock" placeholder="Stock" value="<?php echo htmlspecialchars($ProductStock); ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">

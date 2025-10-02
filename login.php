@@ -30,15 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["username"]) && isset($
                     $role_row = mysqli_fetch_array($role_result);
                     $_SESSION["role_id"] = $role_row["role_id"];
                     $_SESSION["role"] = $role_row["description"];
-
-                    $sql = "SELECT * FROM employees WHERE EmployeeID='$row[emp_id]' ";
-                    $emp_result = mysqli_query($conn, $sql);
-                    $emp_row = mysqli_fetch_array($emp_result);
-                    $_SESSION["fname"] = $emp_row["FirstName"];
-                    $_SESSION["lname"] = $emp_row["LastName"];
-                    $_SESSION["user_photo"] = $emp_row["Photo"];
-                    $_SESSION["user_id"] = $emp_row["EmployeeID"];
-
+                    
+                    $_SESSION["emp_id"] = $row['emp_id'];
                     $_SESSION["username"] = $row["username"];
                     $_SESSION["password"] = $row["password"];
                     $_SESSION["logged_in"] = true;

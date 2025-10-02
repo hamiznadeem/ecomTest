@@ -68,7 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["edit_profile_btn"])) {
         if(!mysqli_stmt_execute($stmt)){
             echo "<script>alert('Error Occurred".mysqli_stmt_error($stmt)."');</script>";
         }else{
-            echo "<script>alert('Profile Updated Successfully');</script>";
+            header("Location: profile.php");
+            exit();
         }
     }
 }     
