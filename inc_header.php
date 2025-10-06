@@ -353,6 +353,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </ul>
 
     </aside><!-- End Sidebar-->
+
+
     <div class="modal" tabindex="-1" id="logoutModal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -365,7 +367,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">No</button>
-                    <a href="logout.php" type="button" class="btn btn-danger">Logout</a>
+                    <a href="logout.php" type="button" class="btn btn-primary">Logout</a>
                 </div>
             </div>
         </div>
